@@ -1,0 +1,53 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+
+  datasource:
+    primary:
+      url: jdbc:postgresql://localhost:5432/postgres
+      username: postgres
+      password: password
+      driver-class-name: org.postgresql.Driver
+      hiraki:
+        maximum-pool-size: 10
+
+    secondary:
+      url: jdbc:postgresql://localhost:5432/postgres2
+      username: postgres
+      password: password
+      driver-class-name: org.postgresql.Driver
+      hiraki:
+        maximum-pool-size: 10
+
+  jpa:
+    primary:
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+          physical_naming_strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+          cache:
+            use_second_level_cache: true
+            use_query_cache: true
+            region:
+              factory_class:
+
+    secondary:
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+
+    #common jpa properties
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database: POSTGRESQL
+
+    #common vendor properties
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: com.demo.multiplesqldatasources.configuration.CustomPhysicalNamingStrategy
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        jdbc:
+          time_zone: UTC
